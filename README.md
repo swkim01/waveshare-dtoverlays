@@ -1,5 +1,5 @@
-### WaveShare SpotPear 3.2", 3.5" LCD Device Tree Overlays for the Raspberry PI
-This is Device Tree Overlays of the [WaveShare SpotPear 3.2" TFT LCD](http://www.waveshare.com/product/modules/oleds-lcds/3.2inch-rpi-lcd-b.htm) and the [WaveShare SpotPear 3.5" TFT LCD](http://www.waveshare.com/product/modules/oleds-lcds/3.5inch-rpi-lcd-a.htm) for the Raspberry PI and PI 2 using [notro](https://github.com/notro)'s FBTFT driver.
+### WaveShare SpotPear 3.2" and 3.5" LCD Device Tree Overlays for the Raspberry PI
+This is Device Tree Overlays of [WaveShare SpotPear 3.2" TFT LCD](http://www.waveshare.com/product/modules/oleds-lcds/3.2inch-rpi-lcd-b.htm) and [WaveShare SpotPear 3.5" TFT LCD](http://www.waveshare.com/product/modules/oleds-lcds/3.5inch-rpi-lcd-a.htm) for the Raspberry PI and PI 2 using [notro](https://github.com/notro)'s FBTFT driver.
 
 Note that the waveshare 3.5" lcd's overlay is almost same with [JBTek overlay](https://github.com/acidjazz/jbtekoverlay).
 
@@ -18,7 +18,6 @@ or
 ```shell
 sudo cp waveshare-dtoverlays/waveshare35a-overlay.dtb /boot/overlays/.
 ```
-```
 3. Specify this overlay file in your `/boot/config.txt` along with activating SPI
 ```ini
 dtparam=spi=on
@@ -28,7 +27,6 @@ or
 ```ini
 dtparam=spi=on
 dtoverlay=waveshare35a
-or
 ```
 You can configure some parameters of the lcd module like this:
 ```ini
