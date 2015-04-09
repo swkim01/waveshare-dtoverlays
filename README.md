@@ -1,2 +1,37 @@
-# waveshare-dtoverlays
-WaveShare SpotPear 3.2" and 3.5" TFT LCD overlays for the Raspberry PI and PI 2 
+### WaveShare SpotPear 3.2", 3.5" LCD Device Tree Overlays for the Raspberry PI
+This is Device Tree Overlays of the [WaveShare SpotPear 3.2" TFT LCD](http://www.waveshare.com/product/modules/oleds-lcds/3.2inch-rpi-lcd-b.htm) and the [WaveShare SpotPear 3.5" TFT LCD](http://www.waveshare.com/product/modules/oleds-lcds/3.5inch-rpi-lcd-a.htm) for the Raspberry PI and PI 2 using [notro](https://github.com/notro)'s FBTFT driver.
+
+Note that the waveshare 3.5" lcd's overlay is almost same with [JBTek overlay](https://github.com/acidjazz/jbtekoverlay).
+
+#### Installation
+===
+1. Follow the steps on [notro's wiki](https://github.com/notro/fbtft/wiki#install) for installing the fbtft driver on your pi/pi2 (Your PI will not boot with the LCD attached until the right overlay is specified in /boot/config.txt)
+2. Clone my repo onto your pi
+```shell
+git clone https://github.com/swkim01/waveshare-dtoverlays.git
+```
+2. According to your LCD's type, copy the overlay file waveshare32b-overlay.dtb or waveshare35b-overlay.dtb to `/boot/overlays` as root
+```shell
+sudo cp waveshare-dtoverlays/waveshare32b-overlay.dtb /boot/overlays/.
+```
+or
+```shell
+sudo cp waveshare-dtoverlays/waveshare35a-overlay.dtb /boot/overlays/.
+```
+```
+3. Specify this overlay file in your `/boot/config.txt` along with activating SPI
+```ini
+dtparam=spi=on
+dtoverlay=waveshare32b
+```
+or
+```ini
+dtparam=spi=on
+dtoverlay=waveshare35a
+or
+```
+You can configure some parameters of the lcd module like this:
+```ini
+dtoverlay=waveshare32b:rotate=270
+```
+4. reboot your raspberry pi
