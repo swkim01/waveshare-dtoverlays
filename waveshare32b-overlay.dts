@@ -1,0 +1,86 @@
+/*
+ * Device Tree overlay for waveshare 3.2inch TFT LCD
+ *
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "brcm,bcm2835", "brcm,bcm2708", "brcm,bcm2709";
+
+	fragment@0 {
+		target = <&spi0>;
+		__overlay__ {
+			status = "okay";
+
+			spidev@0{
+				status = "disabled";
+			};
+
+			spidev@1{
+				status = "disabled";
+			};
+		};
+	};
+
+	fragment@1 {
+		target = <&gpio>;
+		__overlay__ {
+			waveshare32b_pins: waveshare32b_pins {
+				brcm,pins = <17 27 22>;
+				brcm,function = <0 0 0>; /* in in in */
+			};
+		};
+	};
+
+	fragment@2 {
+		target = <&spi0>;
+		__overlay__ {
+			/* needed to avoid dtc warning */
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			waveshare32b: waveshare32b@0{
+				compatible = "ilitek,ili9340";
+				reg = <0>;
+				pinctrl-names = "default";
+				pinctrl-0 = <&waveshare32b_pins>;
+
+				spi-max-frequency = <16000000>;
+				rotate = <90>;
+				fps = <25>;
+				bgr;
+				buswidth = <8>;
+				reset-gpios = <&gpio 27 0>;
+				dc-gpios = <&gpio 22 0>;
+				debug = <0>;
+			};
+
+			waveshare35a-ts@1 {
+				compatible = "ti,ads7846";
+				reg = <1>;
+
+			};
+
+			waveshare32b_ts@1 {
+				compatible = "ti,ads7846";
+				reg = <1>;
+
+				spi-max-frequency = <2000000>;
+				interrupts = <17 2>; /* high-to-low edge triggered */
+				interrupt-parent = <&gpio>;
+				pendown-gpio = <&gpio 17 0>;
+				ti,x-plate-ohms = /bits/ 16 <60>;
+				ti,pressure-max = /bits/ 16 <255>;
+			};
+		};
+	};
+
+	__overrides__ {
+		speed =   <&waveshare32b>,"spi-max-frequency:0";
+		rotate =  <&waveshare32b>,"rotate:0";
+		fps =     <&waveshare32b>,"fps:0";
+		debug =   <&waveshare32b>,"debug:0";
+	};
+};
