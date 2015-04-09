@@ -10,7 +10,7 @@ Note that the waveshare 3.5" lcd's overlay is almost same with [JBTek overlay](h
 ```shell
 git clone https://github.com/swkim01/waveshare-dtoverlays.git
 ```
-2. According to your LCD's type, copy the overlay file waveshare32b-overlay.dtb or waveshare35b-overlay.dtb to `/boot/overlays` as root
+3. According to your LCD's type, copy the overlay file waveshare32b-overlay.dtb or waveshare35b-overlay.dtb to `/boot/overlays` as root
 ```shell
 sudo cp waveshare-dtoverlays/waveshare32b-overlay.dtb /boot/overlays/.
 ```
@@ -18,7 +18,7 @@ or
 ```shell
 sudo cp waveshare-dtoverlays/waveshare35a-overlay.dtb /boot/overlays/.
 ```
-3. Specify this overlay file in your `/boot/config.txt` along with activating SPI
+4. Specify this overlay file in your `/boot/config.txt` along with activating SPI
 ```ini
 dtparam=spi=on
 dtoverlay=waveshare32b
@@ -32,4 +32,4 @@ You can configure some parameters of the lcd module like this:
 ```ini
 dtoverlay=waveshare32b:rotate=270
 ```
-4. reboot your raspberry pi
+5. reboot your raspberry pi
