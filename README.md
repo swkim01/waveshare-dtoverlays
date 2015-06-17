@@ -12,11 +12,11 @@ git clone https://github.com/swkim01/waveshare-dtoverlays.git
 ```
 3. According to your LCD's type, copy the overlay file waveshare32b-overlay.dtb or waveshare35b-overlay.dtb to `/boot/overlays` as root
 ```shell
-sudo cp waveshare-dtoverlays/waveshare32b-overlay.dtb /boot/overlays/.
+sudo cp waveshare-dtoverlays/waveshare32b-overlay.dtb /boot/overlays/
 ```
 or
 ```shell
-sudo cp waveshare-dtoverlays/waveshare35a-overlay.dtb /boot/overlays/.
+sudo cp waveshare-dtoverlays/waveshare35a-overlay.dtb /boot/overlays/
 ```
 4. Specify this overlay file in your `/boot/config.txt` along with activating SPI
 ```ini
@@ -33,3 +33,5 @@ You can configure some parameters of the lcd module like this:
 dtoverlay=waveshare32b:rotate=270
 ```
 5. reboot your raspberry pi
+
+After then, you have to calibrate touch position as to [FBTFT wiki](https://https://github.com/notro/fbtft/wiki).
