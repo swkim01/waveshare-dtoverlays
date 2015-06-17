@@ -34,4 +34,4 @@ dtoverlay=waveshare32b:rotate=270
 ```
 5. reboot your raspberry pi
 
-After then, you have to calibrate touch position as to [FBTFT wiki](https://https://github.com/notro/fbtft/wiki).
+After then, you have to calibrate touch position as to [FBTFT wiki](https://github.com/notro/fbtft/wiki).
