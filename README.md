@@ -1,7 +1,7 @@
-### WaveShare SpotPear 3.2" and 3.5" LCD Device Tree Overlays for the Raspberry PI
+### WaveShare SpotPear 3.2" and 3.5/4.0" LCD Device Tree Overlays for the Raspberry PI
 This is Device Tree Overlays of [WaveShare SpotPear 3.2" TFT LCD](http://www.waveshare.com/product/modules/oleds-lcds/3.2inch-rpi-lcd-b.htm) and [WaveShare SpotPear 3.5" TFT LCD](http://www.waveshare.com/product/modules/oleds-lcds/3.5inch-rpi-lcd-a.htm) for the Raspberry PI and PI 2 using [notro](https://github.com/notro)'s FBTFT driver.
 
-Note that the waveshare 3.5" lcd's overlay is almost same with [JBTek overlay](https://github.com/acidjazz/jbtekoverlay).
+Note that the waveshare 3.5/4.0" lcd's overlay is almost same with [JBTek overlay](https://github.com/acidjazz/jbtekoverlay).
 
 #### Installation
 ===
