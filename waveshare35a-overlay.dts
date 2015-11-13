@@ -91,5 +91,6 @@
 		rotate =	<&waveshare35a>,"rotate:0";
 		fps =		<&waveshare35a>,"fps:0";
 		debug =		<&waveshare35a>,"debug:0";
+		swapxy =	<&waveshare35a>,"ti,swap-xy?";
 	};
 };

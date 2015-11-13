@@ -5,6 +5,7 @@ Note that the waveshare 3.5/4.0" lcd's overlay is almost same with [JBTek overla
 
 #### Installation
 ===
+*_Update:_* The fbtft drivers have been absorbed into the official linux kernel tree. Step 1 can be skipped.
 1. Follow the steps on [notro's wiki](https://github.com/notro/fbtft/wiki#install) for installing the fbtft driver on your pi/pi2 (Your PI will not boot with the LCD attached until the right overlay is specified in /boot/config.txt)
 2. Clone my repo onto your pi
 ```shell
