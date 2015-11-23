@@ -57,7 +57,7 @@
 				debug = <0>;
 			};
 
-			waveshare23b_ts: waveshare32b-ts@1 {
+			waveshare32b_ts: waveshare32b-ts@1 {
 				compatible = "ti,ads7846";
 				reg = <1>;
 
