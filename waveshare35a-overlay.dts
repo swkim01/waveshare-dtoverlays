@@ -1,5 +1,5 @@
 /*
- * Device Tree overlay for PiScreen 3.5" display shield by Ozzmaker
+ * Device Tree overlay for waveshare 3.5inch TFT LCD
  *
  */
 
@@ -73,7 +73,7 @@
 					0x1000029>;
 			};
 
-			waveshare35a-ts@1 {
+			waveshare35a_ts: waveshare35a-ts@1 {
 				compatible = "ti,ads7846";
 				reg = <1>;
 
@@ -91,6 +91,6 @@
 		rotate =	<&waveshare35a>,"rotate:0";
 		fps =		<&waveshare35a>,"fps:0";
 		debug =		<&waveshare35a>,"debug:0";
-		swapxy =	<&waveshare35a>,"ti,swap-xy?";
+		swapxy =	<&waveshare35a_ts>,"ti,swap-xy?";
 	};
 };

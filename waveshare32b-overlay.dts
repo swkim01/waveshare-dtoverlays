@@ -57,13 +57,7 @@
 				debug = <0>;
 			};
 
-			waveshare35a-ts@1 {
-				compatible = "ti,ads7846";
-				reg = <1>;
-
-			};
-
-			waveshare32b_ts@1 {
+			waveshare23b_ts: waveshare32b-ts@1 {
 				compatible = "ti,ads7846";
 				reg = <1>;
 
@@ -82,6 +76,6 @@
 		rotate =  <&waveshare32b>,"rotate:0";
 		fps =     <&waveshare32b>,"fps:0";
 		debug =   <&waveshare32b>,"debug:0";
-		swapxy =  <&waveshare32b>,"swap-xy?";
+		swapxy =  <&waveshare32b_ts>,"swap-xy?";
 	};
 };
