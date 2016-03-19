@@ -36,7 +36,7 @@ dtoverlay=waveshare35a
 You can configure some parameters of the lcd module like this:
 ```ini
 dtoverlay=waveshare32b:rotate=270
-dtoverlay=waveshare35a:swapxy=1
+dtoverlay=waveshare35a:rotate=90,swapxy=1
 ```
 
 5.) reboot your raspberry pi
