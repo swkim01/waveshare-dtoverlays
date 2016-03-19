@@ -6,12 +6,15 @@ Note that the waveshare 3.5/4.0" lcd's overlay is almost same with [JBTek overla
 #### Installation
 ===
 *_Update:_* The fbtft drivers have been absorbed into the official linux kernel tree. Step 1 can be skipped.
-1. Follow the steps on [notro's wiki](https://github.com/notro/fbtft/wiki#install) for installing the fbtft driver on your pi/pi2 (Your PI will not boot with the LCD attached until the right overlay is specified in /boot/config.txt)
-2. Clone my repo onto your pi
+
+1.) Follow the steps on [notro's wiki](https://github.com/notro/fbtft/wiki#install) for installing the fbtft driver on your pi/pi2 (Your PI will not boot with the LCD attached until the right overlay is specified in /boot/config.txt)
+
+2.) Clone my repo onto your pi
 ```shell
 git clone https://github.com/swkim01/waveshare-dtoverlays.git
 ```
-3. According to your LCD's type, copy the overlay file waveshare32b-overlay.dtb or waveshare35b-overlay.dtb to `/boot/overlays` as root
+
+3.) According to your LCD's type, copy the overlay file waveshare32b-overlay.dtb or waveshare35b-overlay.dtb to `/boot/overlays` as root
 ```shell
 sudo cp waveshare-dtoverlays/waveshare32b-overlay.dtb /boot/overlays/
 ```
@@ -19,7 +22,8 @@ or
 ```shell
 sudo cp waveshare-dtoverlays/waveshare35a-overlay.dtb /boot/overlays/
 ```
-4. Specify this overlay file in your `/boot/config.txt` along with activating SPI
+
+4.) Specify this overlay file in your `/boot/config.txt` along with activating SPI
 ```ini
 dtparam=spi=on
 dtoverlay=waveshare32b
@@ -34,6 +38,7 @@ You can configure some parameters of the lcd module like this:
 dtoverlay=waveshare32b:rotate=270
 dtoverlay=waveshare35a:swapxy=1
 ```
-5. reboot your raspberry pi
+
+5.) reboot your raspberry pi
 
 After then, you have to calibrate touch position as to [FBTFT wiki](https://github.com/notro/fbtft/wiki).
