@@ -15,12 +15,22 @@ git clone https://github.com/swkim01/waveshare-dtoverlays.git
 ```
 
 3.) According to your LCD's type, copy the overlay file waveshare32b-overlay.dtb or waveshare35b-overlay.dtb to `/boot/overlays` as root
+
+In case of waveshare 3.2" LCD
 ```shell
 sudo cp waveshare-dtoverlays/waveshare32b-overlay.dtb /boot/overlays/
 ```
-or
+or if linux 4.4 kernel or newer,
+```shell
+sudo cp waveshare-dtoverlays/waveshare32b-overlay.dtb /boot/overlays/waveshare32b.dtbo
+```
+In case of waveshare 3.5/4" LCD
 ```shell
 sudo cp waveshare-dtoverlays/waveshare35a-overlay.dtb /boot/overlays/
+```
+or if linux 4.4 kernel or newer,
+```shell
+sudo cp waveshare-dtoverlays/waveshare35a-overlay.dtb /boot/overlays/waveshare35a.dtbo
 ```
 
 4.) Specify this overlay file in your `/boot/config.txt`
