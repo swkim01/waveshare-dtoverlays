@@ -23,14 +23,12 @@ or
 sudo cp waveshare-dtoverlays/waveshare35a-overlay.dtb /boot/overlays/
 ```
 
-4.) Specify this overlay file in your `/boot/config.txt` along with activating SPI
+4.) Specify this overlay file in your `/boot/config.txt`
 ```ini
-dtparam=spi=on
 dtoverlay=waveshare32b
 ```
 or
 ```ini
-dtparam=spi=on
 dtoverlay=waveshare35a
 ```
 You can configure some parameters of the lcd module like this:
