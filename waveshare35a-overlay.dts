@@ -48,8 +48,9 @@
 				pinctrl-0 = <&waveshare35a_pins>;
 
 				spi-max-frequency = <16000000>;
+				txbuflen = <(-1)>;
 				rotate = <90>;
-				bgr;
+				bgr = <0>;
 				fps = <30>;
 				buswidth = <8>;
 				regwidth = <16>;
@@ -88,8 +89,10 @@
 	};
 	__overrides__ {
 		speed =		<&waveshare35a>,"spi-max-frequency:0";
+		txbuflen =	<&waveshare35a>,"txbuflen:0";
 		rotate =	<&waveshare35a>,"rotate:0";
 		fps =		<&waveshare35a>,"fps:0";
+		bgr =		<&waveshare35a>,"bgr:0";
 		debug =		<&waveshare35a>,"debug:0";
 		swapxy =	<&waveshare35a_ts>,"ti,swap-xy?";
 	};

@@ -48,9 +48,10 @@
 				pinctrl-0 = <&waveshare32b_pins>;
 
 				spi-max-frequency = <16000000>;
+				txbuflen = <(-1)>;
 				rotate = <90>;
 				fps = <25>;
-				bgr;
+				bgr = <0>;
 				buswidth = <8>;
 				reset-gpios = <&gpio 27 0>;
 				dc-gpios = <&gpio 22 0>;
@@ -72,10 +73,12 @@
 	};
 
 	__overrides__ {
-		speed =   <&waveshare32b>,"spi-max-frequency:0";
-		rotate =  <&waveshare32b>,"rotate:0";
-		fps =     <&waveshare32b>,"fps:0";
-		debug =   <&waveshare32b>,"debug:0";
-		swapxy =  <&waveshare32b_ts>,"swap-xy?";
+		speed =   	<&waveshare32b>,"spi-max-frequency:0";
+		txbuflen =	<&waveshare32b>,"txbuflen:0";
+		rotate =  	<&waveshare32b>,"rotate:0";
+		fps =     	<&waveshare32b>,"fps:0";
+		bgr =		<&waveshare32b>,"bgr:0";
+		debug =   	<&waveshare32b>,"debug:0";
+		swapxy =  	<&waveshare32b_ts>,"swap-xy?";
 	};
 };
