@@ -48,7 +48,7 @@
 				pinctrl-0 = <&waveshare32b_pins>;
 
 				spi-max-frequency = <16000000>;
-				txbuflen = <(-1)>;
+				txbuflen = <32768>;
 				rotate = <90>;
 				fps = <25>;
 				bgr = <0>;
