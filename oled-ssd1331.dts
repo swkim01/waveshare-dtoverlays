@@ -1,0 +1,85 @@
+// Definitions for Rpi-Proto
+/dts-v1/;
+/plugin/;
+
+/ {
+  compatible = "brcm,bcm2835", "brcm,bcm2708", "brcm,bcm2709";
+
+  fragment@0 {
+    target = <&spi0>;
+    __overlay__ {
+      status = "okay";
+      spidev@0 {
+          status = "disabled";
+      };
+      spidev@1 {
+          status = "disabled";
+      };
+    };
+  };
+
+  fragment@1 {
+    target = <&gpio>;
+    __overlay__ {
+      ssd1331_pins: ssd1331_pins {
+          brcm,pins = <24 23>;
+          brcm,function = <1 1>;
+      };
+    };
+  };
+
+  fragment@2 {
+    target = <&spi0>;
+    __overlay__ {
+      /* needed to avoid dtc warning */
+      #address-cells = <1>;
+      #size-cells = <0>;
+
+      ssd1331: ssd1331@0 {
+        compatible = "solomon,ssd1331";
+        reg = <0>;
+        pinctrl-names = "default";
+        pinctrl-0 = <&ssd1331_pins>;
+
+        spi-max-frequency = <16000000>;
+        txbuflen = <32768>;
+        bgr = <0>;
+        fps = <30>;
+        buswidth = <8>;
+
+        reset-gpios = <&gpio 24 0>;
+        dc-gpios = <&gpio 23 0>;
+        debug = <0>;
+        
+        init = <0x10000ae /* Display Off */
+                0x10000a0 0x72 /* Set Colour Depth and left to right */
+                0x10000a1 0x00 /* Set Display Start Line */
+                0x10000a2 0x00 /* Set Display Offset */
+                0x10000a4 /* Normal Display */
+                0x10000a8 0x3f /* Set multiplex */
+                0x10000ad 0x8e /* Set master */
+                /*0x10000b0 0x0b  Set power mode */
+                0x10000b1 0x31 /* Precharge */
+                0x10000b3 0xf0 /* Clock Div */
+                0x100008a 0x64 /* Precharge A */
+                0x100008b 0x78 /* Precharge B */
+                0x100008c 0x64 /* Precharge C  */
+                0x10000bb 0x3a /* Precharge level */
+                0x10000be 0x3e /* vcomh */
+                0x1000087 0x06 /* Master current */
+                0x1000081 0x91 /* Contrast A */
+                0x1000082 0x50 /* Contrast B */
+                0x1000083 0x7d /* Contrast C */
+                0x10000af /* Set Sleep Mode Display On */
+                >;
+        };
+      };
+    };
+    __overrides__ {
+            speed =	<&ssd1331>,"spi-max-frequency:0";
+            txbuflen =	<&ssd1331>,"txbuflen:0";
+            fps =	<&ssd1331>,"fps:0";
+            bgr =	<&ssd1331>,"bgr:0";
+            debug =	<&ssd1331>,"debug:0";
+    };
+};

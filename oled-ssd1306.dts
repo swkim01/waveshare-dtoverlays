@@ -1,0 +1,81 @@
+// Definitions for Rpi-Proto
+/dts-v1/;
+/plugin/;
+
+/ {
+  compatible = "brcm,bcm2835", "brcm,bcm2708", "brcm,bcm2709";
+
+  fragment@0 {
+    target = <&spi0>;
+    __overlay__ {
+      status = "okay";
+      spidev@0 {
+          status = "disabled";
+      };
+      spidev@1 {
+          status = "disabled";
+      };
+    };
+  };
+
+  fragment@1 {
+    target = <&gpio>;
+    __overlay__ {
+      ssd1306_pins: ssd1306_pins {
+          brcm,pins = <24 23>;
+          brcm,function = <1 1>;
+      };
+    };
+  };
+
+  fragment@2 {
+    target = <&spi0>;
+    __overlay__ {
+      /* needed to avoid dtc warning */
+      #address-cells = <1>;
+      #size-cells = <0>;
+
+      ssd1306: ssd1306@0 {
+        compatible = "solomon,ssd1306";
+        reg = <0>;
+        pinctrl-names = "default";
+        pinctrl-0 = <&ssd1306_pins>;
+
+        spi-max-frequency = <16000000>;
+        txbuflen = <32768>;
+        bgr = <0>;
+        fps = <30>;
+        buswidth = <8>;
+
+        reset-gpios = <&gpio 24 0>;
+        dc-gpios = <&gpio 23 0>;
+        debug = <0>;
+        
+        //init = <0x10000ae /* Display Off */
+        //        0x10000d5 0x80 /* Clock Div */
+        //        0x10000a8 0x3f /* Set multiplex */
+        //        0x10000d3 0x00 /* Set Display Offset */
+        //        0x1000040 /* Set Display Start Line */
+        //        0x100008d 0x14 /* Charge Pump */
+        //        0x1000020 0x00 /* Set memory mode */
+        //        0x10000a1 /* SegRemap */
+        //        0x10000c8 /* COM Output Scan Direction */
+        //        0x10000da 0x12 /* Set COM Pins Hardware Conf */
+        //        0x1000081 0xcf /* Set Contrast */
+        //        0x10000d9 0xf1 /* Precharge */
+        //        0x10000db 0x40 /* vcomh */
+        //        0x10000a4 /* Display All ON and Resume to RAM  */
+        //        0x10000a6 /* Normal Display */
+        //        0x10000af /* Set Sleep Mode Display On */
+        //        >;
+        };
+      };
+    };
+    __overrides__ {
+            speed =	<&ssd1306>,"spi-max-frequency:0";
+            txbuflen =	<&ssd1306>,"txbuflen:0";
+            fps =	<&ssd1306>,"fps:0";
+            bgr =	<&ssd1306>,"bgr:0";
+            debug =	<&ssd1306>,"debug:0";
+    };
+};
