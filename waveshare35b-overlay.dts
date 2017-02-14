@@ -1,0 +1,99 @@
+/*
+ * Device Tree overlay for waveshare 3.5inch IPS LCD
+ *
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "brcm,bcm2835", "brcm,bcm2708", "brcm,bcm2709";
+
+	fragment@0 {
+		target = <&spi0>;
+		__overlay__ {
+			status = "okay";
+
+			spidev@0 {
+				status = "disabled";
+			};
+
+			spidev@1 {
+				status = "disabled";
+			};
+		};
+	};
+
+	fragment@1 {
+		target = <&gpio>;
+		__overlay__ {
+			waveshare35b_pins: waveshare35b_pins {
+				brcm,pins = <17 25 24>;
+				brcm,function = <0 0 0>; /* in in in */
+			};
+		};
+	};
+
+	fragment@2 {
+		target = <&spi0>;
+		__overlay__ {
+			/* needed to avoid dtc warning */
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			waveshare35b: waveshare35b@0 {
+				compatible = "ilitek,ili9486";
+				reg = <0>;
+				pinctrl-names = "default";
+				pinctrl-0 = <&waveshare35b_pins>;
+
+				spi-max-frequency = <15000000>;
+				txbuflen = <32768>;
+				rotate = <90>;
+				bgr = <0>;
+				fps = <30>;
+				buswidth = <8>;
+				regwidth = <16>;
+				reset-gpios = <&gpio 25 0>;
+				dc-gpios = <&gpio 24 0>;
+				debug = <0>;
+
+				init = <0x10000b0 0x0
+				        0x1000011
+				        0x20000ff
+				        0x100003a 0x55
+				        0x1000036 0x28
+				        0x1000021
+				        0x10000c0 0x9 0x9
+				        0x10000c1 0x41 0x0
+				        0x10000c5 0x0 0x36
+				        0x10000e0 0x0 0x2c 0x2c 0xb 0xc 0x4 0x4c 0x64 0x36 0x3 0xe 0x1 0x10 0x1 0x0
+				        0x10000e1 0xf 0x37 0x37 0xc 0xf 0x5 0x50 0x32 0x36 0x4 0xb 0x0 0x19 0x14 0xf
+				        0x1000011
+				        0x20000ff
+				        0x1000029>;
+			};
+
+			waveshare35b_ts: waveshare35b-ts@1 {
+				compatible = "ti,ads7846";
+				reg = <1>;
+
+				spi-max-frequency = <2000000>;
+				interrupts = <17 2>; /* high-to-low edge triggered */
+				interrupt-parent = <&gpio>;
+				pendown-gpio = <&gpio 17 0>;
+				ti,x-plate-ohms = /bits/ 16 <60>;
+				ti,pressure-max = /bits/ 16 <255>;
+			};
+		};
+	};
+	__overrides__ {
+		speed =		<&waveshare35b>,"spi-max-frequency:0";
+		txbuflen =	<&waveshare35b>,"txbuflen:0";
+		rotate =	<&waveshare35b>,"rotate:0";
+		fps =		<&waveshare35b>,"fps:0";
+		bgr =		<&waveshare35b>,"bgr:0";
+		debug =		<&waveshare35b>,"debug:0";
+		swapxy =	<&waveshare35b_ts>,"ti,swap-xy?";
+	};
+};
