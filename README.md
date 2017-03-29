@@ -1,10 +1,10 @@
-### WaveShare SpotPear 3.2" and 3.5/4.0" LCD Device Tree Overlays for the Raspberry PI
+## WaveShare SpotPear 3.2" and 3.5/4.0" LCD Device Tree Overlays for the Raspberry PI
 This is Device Tree Overlays of [WaveShare SpotPear 3.2" TFT LCD](http://www.waveshare.com/product/modules/oleds-lcds/3.2inch-rpi-lcd-b.htm) and [WaveShare SpotPear 3.5" TFT LCD](http://www.waveshare.com/product/modules/oleds-lcds/3.5inch-rpi-lcd-a.htm) for the Raspberry PI and PI 2 using [notro](https://github.com/notro)'s FBTFT driver.
 
 Note that the waveshare 3.5/4.0" lcd's overlay is almost same with [JBTek overlay](https://github.com/acidjazz/jbtekoverlay).
 
-#### Installation
-===
+### Installation
+
 *_Update:_* The fbtft drivers have been absorbed into the official linux kernel tree. Step 1 can be skipped.
 
 1.) Follow the steps on [notro's wiki](https://github.com/notro/fbtft/wiki#install) for installing the fbtft driver on your pi/pi2 (Your PI will not boot with the LCD attached until the right overlay is specified in /boot/config.txt)
@@ -49,4 +49,102 @@ dtoverlay=waveshare35a:rotate=90,swapxy=1
 
 5.) reboot your raspberry pi
 
-After then, you have to calibrate touch position as to [FBTFT wiki](https://github.com/notro/fbtft/wiki).
+
+After then, you need to calibrate touch position.
+
+### Touch Calibration
+
+Since now x server uses libinput to handle input devices instead of evdev, there are two method to calibrate/coordinate touch screen.
+
+1.) One is to use [coordination transformation matrix](https://wiki.ubuntu.com/X/InputCoordinateTransformation).  You can confirm the transformation matrix property of the input device by following commands.
+```
+$ xinput list
+$ xinput list-props "ADS7846 Touchscreen"
+```
+This is coordinate transformation matrix that transform from input coordinate(x, y, z) to output coordinate(X, Y, Z).
+
+	⎡ 1 0 0 ⎤
+	⎜ 0 1 0 ⎥
+	⎣ 0 0 1 ⎦
+
+Thus to convert coordinates, you have to add the following code within the section of touchscreen in /usr/share/X11/xorg.conf.d/99-callibration.conf or 40-libinput.conf.
+- in case of rotating left (counterclockwise 90 degree),
+		⎡ 0 -1 1 ⎤ 
+		⎜ 1  0 0 ⎥ 
+		⎣ 0  0 1 ⎦ 
+```
+Option "TransformationMatrix" "0 -1 1 1 0 0 0 0 1"
+```
+or execute the following code.
+```
+xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' 0 -1 1 1 0 0 0 0 1
+```
+- in case of rotating right (clockwise 90 degree),
+		⎡ 0 1 0 ⎤ 
+		⎜-1 0 1 ⎥ 
+		⎣ 0 0 1 ⎦ 
+```
+Option "TransformationMatrix" "0 1 0 -1 0 1 0 0 1"
+```
+or execute the following code.
+```
+xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' 0 1 0 -1 0 1 0 0 1
+```
+- in case of inverting rotate (clockwise 180 degree),
+		⎡-1  0 1 ⎤ 
+		⎜ 0 -1 1 ⎥ 
+		⎣ 0  0 1 ⎦ 
+```
+Option "TransformationMatrix" "-1 0 1 0 -1 1 0 0 1"
+```
+or execute the following code.
+```
+xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' -1 0 1 0 -1 1 0 0 1
+```
+- in case of inverting x,
+		⎡-1 0 1 ⎤ 
+		⎜ 0 1 1 ⎥ 
+		⎣ 0 0 1 ⎦ 
+```
+Option "TransformationMatrix" "-1 0 1 0 1 0 0 0 1"
+```
+or execute the following code.
+```
+xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' -1 0 1 0 1 0 0 0 1
+```
+- in case of inverting y,
+		⎡ 1  0 0 ⎤ 
+		⎜ 0 -1 1 ⎥ 
+		⎣ 0  0 1 ⎦ 
+```
+Option "TransformationMatrix" "1 0 0 0 -1 1 0 0 1"
+```
+or execute the following code.
+```
+xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' 1 0 0 0 -1 1 0 0 1
+```
+- in case of swapping x and y,
+		⎡ 0 1 0 ⎤ 
+		⎜ 1 0 0 ⎥ 
+		⎣ 0 0 1 ⎦ 
+```
+Option "TransformationMatrix" "0 1 0 1 0 0 0 0 1"
+```
+or execute the following code.
+```
+xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' 0 1 0 1 0 0 0 0 1
+```
+
+2.) The other method is to reuse evdev. The detailed step is as follows.
+
+- Install evdev package.
+```
+$ sudo apt-get install xserver-xorg-input-evdev
+```
+- Make sure that /etc/X11/xorg.conf.d is empty.
+- Just be sure that evdev.conf has a higher number than 40-libinput.conf. For example, rename 10-evdev.conf to 45-evdev.conf. this forces evdev to load after libinput.
+- Finally, /usr/share/X11/xorg.conf.d should contain something like:
+```
+    10-quirks.conf 40-libinput.conf 45-evdev.conf 70-synaptics.conf 99-fbturbo.conf
+```
+- Calibrate touchscreen as to [FBTFT wiki](https://github.com/notro/fbtft/wiki/FBTFT-on-Raspian) and/or make /usr/share/X11/xorg.conf.d/99-ads7846-cal.conf.
