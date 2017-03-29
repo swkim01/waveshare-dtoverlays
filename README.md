@@ -73,73 +73,73 @@ Thus to convert coordinates, you have to add the following code within the secti
 		⎡ 0 -1 1 ⎤ 
 		⎜ 1  0 0 ⎥ 
 		⎣ 0  0 1 ⎦ 
-```
-Option "TransformationMatrix" "0 -1 1 1 0 0 0 0 1"
-```
-or execute the following code.
-```
-xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' 0 -1 1 1 0 0 0 0 1
-```
+	```
+	Option "TransformationMatrix" "0 -1 1 1 0 0 0 0 1"
+	```
+	or execute the following code.
+	```
+	xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' 0 -1 1 1 0 0 0 0 1
+	```
 - in case of rotating right (clockwise 90 degree),
 
 		⎡ 0 1 0 ⎤ 
 		⎜-1 0 1 ⎥ 
 		⎣ 0 0 1 ⎦ 
-```
-Option "TransformationMatrix" "0 1 0 -1 0 1 0 0 1"
-```
-or execute the following code.
-```
-xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' 0 1 0 -1 0 1 0 0 1
-```
+	```
+	Option "TransformationMatrix" "0 1 0 -1 0 1 0 0 1"
+	```
+	or execute the following code.
+	```
+	xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' 0 1 0 -1 0 1 0 0 1
+	```
 - in case of inverting rotate (clockwise 180 degree),
 
 		⎡-1  0 1 ⎤ 
 		⎜ 0 -1 1 ⎥ 
 		⎣ 0  0 1 ⎦ 
-```
-Option "TransformationMatrix" "-1 0 1 0 -1 1 0 0 1"
-```
-or execute the following code.
-```
-xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' -1 0 1 0 -1 1 0 0 1
-```
+	```
+	Option "TransformationMatrix" "-1 0 1 0 -1 1 0 0 1"
+	```
+	or execute the following code.
+	```
+	xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' -1 0 1 0 -1 1 0 0 1
+	```
 - in case of inverting x,
 
 		⎡-1 0 1 ⎤ 
 		⎜ 0 1 1 ⎥ 
 		⎣ 0 0 1 ⎦ 
-```
-Option "TransformationMatrix" "-1 0 1 0 1 0 0 0 1"
-```
-or execute the following code.
-```
-xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' -1 0 1 0 1 0 0 0 1
-```
+	```
+	Option "TransformationMatrix" "-1 0 1 0 1 0 0 0 1"
+	```
+	or execute the following code.
+	```
+	xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' -1 0 1 0 1 0 0 0 1
+	```
 - in case of inverting y,
 
 		⎡ 1  0 0 ⎤ 
 		⎜ 0 -1 1 ⎥ 
 		⎣ 0  0 1 ⎦ 
-```
-Option "TransformationMatrix" "1 0 0 0 -1 1 0 0 1"
-```
-or execute the following code.
-```
-xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' 1 0 0 0 -1 1 0 0 1
-```
+	```
+	Option "TransformationMatrix" "1 0 0 0 -1 1 0 0 1"
+	```
+	or execute the following code.
+	```
+	xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' 1 0 0 0 -1 1 0 0 1
+	```
 - in case of swapping x and y,
 
 		⎡ 0 1 0 ⎤ 
 		⎜ 1 0 0 ⎥ 
 		⎣ 0 0 1 ⎦ 
-```
-Option "TransformationMatrix" "0 1 0 1 0 0 0 0 1"
-```
-or execute the following code.
-```
-xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' 0 1 0 1 0 0 0 0 1
-```
+	```
+	Option "TransformationMatrix" "0 1 0 1 0 0 0 0 1"
+	```
+	or execute the following code.
+	```
+	xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' 0 1 0 1 0 0 0 0 1
+	```
 
 2.) The other method is to reuse evdev. The detailed step is as follows.
 
