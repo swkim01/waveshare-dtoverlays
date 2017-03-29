@@ -69,6 +69,7 @@ This is coordinate transformation matrix that transform from input coordinate(x,
 
 Thus to convert coordinates, you have to add the following code within the section of touchscreen in /usr/share/X11/xorg.conf.d/99-callibration.conf or 40-libinput.conf.
 - in case of rotating left (counterclockwise 90 degree),
+
 		⎡ 0 -1 1 ⎤ 
 		⎜ 1  0 0 ⎥ 
 		⎣ 0  0 1 ⎦ 
@@ -80,6 +81,7 @@ or execute the following code.
 xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' 0 -1 1 1 0 0 0 0 1
 ```
 - in case of rotating right (clockwise 90 degree),
+
 		⎡ 0 1 0 ⎤ 
 		⎜-1 0 1 ⎥ 
 		⎣ 0 0 1 ⎦ 
@@ -91,6 +93,7 @@ or execute the following code.
 xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' 0 1 0 -1 0 1 0 0 1
 ```
 - in case of inverting rotate (clockwise 180 degree),
+
 		⎡-1  0 1 ⎤ 
 		⎜ 0 -1 1 ⎥ 
 		⎣ 0  0 1 ⎦ 
@@ -102,6 +105,7 @@ or execute the following code.
 xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' -1 0 1 0 -1 1 0 0 1
 ```
 - in case of inverting x,
+
 		⎡-1 0 1 ⎤ 
 		⎜ 0 1 1 ⎥ 
 		⎣ 0 0 1 ⎦ 
@@ -113,6 +117,7 @@ or execute the following code.
 xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' -1 0 1 0 1 0 0 0 1
 ```
 - in case of inverting y,
+
 		⎡ 1  0 0 ⎤ 
 		⎜ 0 -1 1 ⎥ 
 		⎣ 0  0 1 ⎦ 
@@ -124,6 +129,7 @@ or execute the following code.
 xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' 1 0 0 0 -1 1 0 0 1
 ```
 - in case of swapping x and y,
+
 		⎡ 0 1 0 ⎤ 
 		⎜ 1 0 0 ⎥ 
 		⎣ 0 0 1 ⎦ 
