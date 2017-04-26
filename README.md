@@ -148,9 +148,13 @@ Thus to convert coordinates, you have to add the following code within the secti
 $ sudo apt-get install xserver-xorg-input-evdev
 ```
 - Make sure that /etc/X11/xorg.conf.d is empty.
-- Just be sure that evdev.conf has a higher number than 40-libinput.conf. For example, rename 10-evdev.conf to 45-evdev.conf. this forces evdev to load after libinput.
-- Finally, /usr/share/X11/xorg.conf.d should contain something like:
+- Modify /usr/share/X11/xorg.conf.d/40-libinput.conf in the last section change the driver to evdev.
 ```
-    10-quirks.conf 40-libinput.conf 45-evdev.conf 70-synaptics.conf 99-fbturbo.conf
+Section "InputClass"
+        Identifier "libinput touchscreen catchall"
+        MatchIsTouchscreen "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "evdev"
+EndSection
 ```
 - Calibrate touchscreen as to [FBTFT wiki](https://github.com/notro/fbtft/wiki/FBTFT-on-Raspian) and/or make /usr/share/X11/xorg.conf.d/99-ads7846-cal.conf.
