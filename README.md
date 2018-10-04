@@ -20,7 +20,7 @@ In case of waveshare 3.2" LCD
 ```shell
 sudo cp waveshare-dtoverlays/waveshare32b.dtbo /boot/overlays/
 ```
-or if linux 4.4 kernel or older,
+or if older than linux 4.4 kernel,
 ```shell
 sudo cp waveshare-dtoverlays/waveshare32b.dtbo /boot/overlays/waveshare32b-overlay.dtb
 ```
@@ -28,7 +28,7 @@ In case of waveshare 3.5/4" LCD
 ```shell
 sudo cp waveshare-dtoverlays/waveshare35a.dtbo /boot/overlays/
 ```
-or if linux 4.4 kernel or newer,
+or if older than linux 4.4 kernel,
 ```shell
 sudo cp waveshare-dtoverlays/waveshare35a.dtbo /boot/overlays/waveshare35a-overlay.dtb
 ```
