@@ -1,0 +1,100 @@
+/*
+ * Device Tree overlay for waveshare 3.5inch IPS LCD
+ *
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "brcm,bcm2835", "brcm,bcm2708", "brcm,bcm2709";
+
+	fragment@0 {
+		target = <&spi0>;
+		__overlay__ {
+			status = "okay";
+
+			spidev@0 {
+				status = "disabled";
+			};
+
+			spidev@1 {
+				status = "disabled";
+			};
+		};
+	};
+
+	fragment@1 {
+		target = <&gpio>;
+		__overlay__ {
+			tft35a_pins: tft35a_pins {
+				brcm,pins = <17 25 24>;
+				brcm,function = <0 0 0>; /* in in in */
+			};
+		};
+	};
+
+	fragment@2 {
+		target = <&spi0>;
+		__overlay__ {
+			/* needed to avoid dtc warning */
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			tft35a: tft35a@0 {
+				compatible = "ilitek,ili9486";
+				reg = <0>;
+				pinctrl-names = "default";
+				pinctrl-0 = <&tft35a_pins>;
+
+				spi-max-frequency = <2400000000>;
+				txbuflen = <32768>;
+				rotate = <90>;
+				bgr = <0>;
+				fps = <30>;
+				buswidth = <8>;
+				regwidth = <16>;
+				reset-gpios = <&gpio 25 0>;
+				dc-gpios = <&gpio 24 0>;
+				debug = <0>;
+
+				init = <0x10000f1 0x36 0x4 0x0 0x3c 0xf 0x8f
+				        0x10000f2 0x18 0xa3 0x12 0x2 0xb2 0x12 0xff 0x10 0x0
+				        0x10000f8 0x21 0x4
+				        0x10000f9 0x0 0x8
+				        0x1000036 0x8
+				        0x10000b4 0x0
+				        0x10000c1 0x41
+				        0x10000c5 0x0 0x91 0x80 0x0
+				        0x10000e0 0xf 0x1f 0x1c 0xc 0xf 0x8 0x48 0x98 0x37 0xa 0x13 0x4 0x11 0xd 0x0
+				        0x10000e1 0xf 0x32 0x2e 0xb 0xd 0x5 0x47 0x75 0x37 0x6 0x10 0x3 0x24 0x20 0x0
+				        0x100003a 0x55
+				        0x1000011
+				        0x1000036 0x28
+				        0x20000ff
+				        0x1000029>;
+			};
+
+			tft35a_ts: tft35a-ts@1 {
+				compatible = "ti,ads7846";
+				reg = <1>;
+
+				spi-max-frequency = <32000000>;
+				interrupts = <17 2>; /* high-to-low edge triggered */
+				interrupt-parent = <&gpio>;
+				pendown-gpio = <&gpio 17 0>;
+				ti,x-plate-ohms = /bits/ 16 <60>;
+				ti,pressure-max = /bits/ 16 <255>;
+			};
+		};
+	};
+	__overrides__ {
+		speed =		<&tft35a>,"spi-max-frequency:0";
+		txbuflen =	<&tft35a>,"txbuflen:0";
+		rotate =	<&tft35a>,"rotate:0";
+		fps =		<&tft35a>,"fps:0";
+		bgr =		<&tft35a>,"bgr:0";
+		debug =		<&tft35a>,"debug:0";
+		swapxy =	<&tft35a_ts>,"ti,swap-xy?";
+	};
+};
