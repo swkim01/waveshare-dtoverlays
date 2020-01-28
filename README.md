@@ -50,6 +50,15 @@ dtoverlay=waveshare35a:rotate=90,swapxy=1
 5.) reboot your raspberry pi
 
 
+6.) In case of using X windows on raspbian buster, you have to create a fbdev conf file. Create /usr/share/X11/xorg.conf.d/99-fbdev.conf.
+```
+Section "Device"
+        Identifier "touchscreen"
+        Driver "fbdev"
+        Option "fbdev" "/dev/fb1"
+EndSection
+```
+
 After then, you need to calibrate touch position.
 
 ### Touch Calibration
@@ -140,6 +149,34 @@ Thus to convert coordinates, you have to add the following code within the secti
 	```
 	xinput set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' 0 1 0 1 0 0 0 0 1
 	```
+- To calibrate in detail, you can build a modified source of [xinput-calibrator](https://github.com/kreijack/xinput_calibrator/tree/libinput)
+```
+$ sudo apt-get install git build-essential libx11-dev libxext-dev libxi-dev x11proto-input-dev
+$ git clone https://github.com/kreijack/xinput_calibrator -b libinput
+$ cd xinput_calibrator
+$ ./autogen.sh
+$ ./configure
+$ make
+$ sudo make install
+```
+Configure xinput_calibrator to autostart with X windows.
+```
+$ sudo cp -a scripts/xinput_calibrator_pointercal.sh /etc/X11/Xsession.d
+$ echo "sudo /bin/sh /etc/X11/Xsession.d/xinput_calibrator_pointercal.sh" | sudo tee -a /etc/xdg/lxsession/LXDE-pi/autostart
+```
+On first start of X windows a calibration window will be displayed.
+```
+startx
+```
+After calibration, the calibration file `/etc/pointercal.xinput` will be createdautomatically. 
+Or instead you can create `/usr/share/X11/xorg.conf.d/99-calibration.conf` by executing `xinput_calibrator` or copy from `/etc/pointercal.xinput`.
+```
+Section "InputClass"
+        Identifier "calibration"
+        MatchProduct "ADS7846 Touchscreen"
+        Option "TransformationMatrix" "0.016152 -1.137751 1.062519 1.126908 -0.005470 -0.064818 0.0 0.0 1.0"
+EndSection
+```
 
 2.) The other method is to reuse evdev. The detailed step is as follows.
 
@@ -157,4 +194,5 @@ Section "InputClass"
         Driver "evdev"
 EndSection
 ```
-- Calibrate touchscreen as to [FBTFT wiki](https://github.com/notro/fbtft/wiki/FBTFT-on-Raspian) and/or make /usr/share/X11/xorg.conf.d/99-ads7846-cal.conf.
+- Calibrate touchscreen as to [FBTFT wiki](https://github.com/notro/fbtft/wiki/FBTFT-on-Raspian) and/or make /usr/share/X11/xorg.conf.d/99-calibration.conf.
+
