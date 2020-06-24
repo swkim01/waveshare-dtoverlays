@@ -53,7 +53,7 @@
 				fps = <25>;
 				bgr = <0>;
 				buswidth = <8>;
-				reset-gpios = <&gpio 27 0>;
+				reset-gpios = <&gpio 27 1>;
 				dc-gpios = <&gpio 22 0>;
 				debug = <0>;
 			};
@@ -65,7 +65,7 @@
 				spi-max-frequency = <2000000>;
 				interrupts = <17 2>; /* high-to-low edge triggered */
 				interrupt-parent = <&gpio>;
-				pendown-gpio = <&gpio 17 0>;
+				pendown-gpio = <&gpio 17 1>;
 				ti,x-plate-ohms = /bits/ 16 <60>;
 				ti,pressure-max = /bits/ 16 <255>;
 			};
