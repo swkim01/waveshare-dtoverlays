@@ -101,6 +101,8 @@
 		fps =		<&tft35a>,"fps:0";
 		bgr =		<&tft35a>,"bgr:0";
 		debug =		<&tft35a>,"debug:0";
+		invertx =   	<&tft35a_ts>,"touchscreen-inverted-x?";
+		inverty =   	<&tft35a_ts>,"touchscreen-inverted-y?";
 		swapxy =	<&tft35a_ts>,"touchscreen-swapped-x-y?";
 	};
 };

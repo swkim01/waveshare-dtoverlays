@@ -100,6 +100,8 @@
 		fps =		<&waveshare35b>,"fps:0";
 		bgr =		<&waveshare35b>,"bgr:0";
 		debug =		<&waveshare35b>,"debug:0";
+		invertx =   	<&waveshare35b_ts>,"touchscreen-inverted-x?";
+		inverty =   	<&waveshare35b_ts>,"touchscreen-inverted-y?";
 		swapxy =	<&waveshare35b_ts>,"touchscreen-swapped-x-y?";
 	};
 };
