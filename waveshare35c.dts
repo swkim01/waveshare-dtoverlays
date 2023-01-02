@@ -90,7 +90,7 @@
 				interrupt-parent = <&gpio>;
 				pendown-gpio = <&gpio 17 1>;
 				ti,x-plate-ohms = /bits/ 16 <60>;
-				ti,pressure-max = /bits/ 16 <255>;
+				touchscreen-max-pressure = <255>;
 			};
 		};
 	};
@@ -101,6 +101,6 @@
 		fps =		<&tft35a>,"fps:0";
 		bgr =		<&tft35a>,"bgr:0";
 		debug =		<&tft35a>,"debug:0";
-		swapxy =	<&tft35a_ts>,"ti,swap-xy?";
+		swapxy =	<&tft35a_ts>,"touchscreen-swapped-x-y?";
 	};
 };
