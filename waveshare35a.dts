@@ -55,7 +55,7 @@
 
 				spi-max-frequency = <16000000>;
 				txbuflen = <32768>;
-				rotate = <90>;
+				rotate = <0>;
 				bgr = <0>;
 				fps = <30>;
 				buswidth = <8>;
@@ -89,7 +89,7 @@
 				interrupt-parent = <&gpio>;
 				pendown-gpio = <&gpio 17 1>;
 				ti,x-plate-ohms = /bits/ 16 <60>;
-				ti,pressure-max = /bits/ 16 <255>;
+				touchscreen-max-pressure = <255>;
 			};
 		};
 	};
@@ -100,6 +100,8 @@
 		fps =		<&waveshare35a>,"fps:0";
 		bgr =		<&waveshare35a>,"bgr:0";
 		debug =		<&waveshare35a>,"debug:0";
-		swapxy =	<&waveshare35a_ts>,"ti,swap-xy?";
+		invertx =   	<&waveshare35a_ts>,"touchscreen-inverted-x?";
+		inverty =   	<&waveshare35a_ts>,"touchscreen-inverted-y?";
+		swapxy =	<&waveshare35a_ts>,"touchscreen-swapped-x-y?";
 	};
 };

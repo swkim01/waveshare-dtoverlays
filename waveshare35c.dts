@@ -55,7 +55,7 @@
 
 				spi-max-frequency = <2400000000>;
 				txbuflen = <32768>;
-				rotate = <90>;
+				rotate = <0>;
 				bgr = <0>;
 				fps = <30>;
 				buswidth = <8>;
@@ -90,7 +90,7 @@
 				interrupt-parent = <&gpio>;
 				pendown-gpio = <&gpio 17 1>;
 				ti,x-plate-ohms = /bits/ 16 <60>;
-				ti,pressure-max = /bits/ 16 <255>;
+				touchscreen-max-pressure = <255>;
 			};
 		};
 	};
@@ -101,6 +101,8 @@
 		fps =		<&tft35a>,"fps:0";
 		bgr =		<&tft35a>,"bgr:0";
 		debug =		<&tft35a>,"debug:0";
-		swapxy =	<&tft35a_ts>,"ti,swap-xy?";
+		invertx =   	<&tft35a_ts>,"touchscreen-inverted-x?";
+		inverty =   	<&tft35a_ts>,"touchscreen-inverted-y?";
+		swapxy =	<&tft35a_ts>,"touchscreen-swapped-x-y?";
 	};
 };
