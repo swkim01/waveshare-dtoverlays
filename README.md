@@ -3,6 +3,12 @@ This is Device Tree Overlays of [WaveShare SpotPear 3.2" TFT LCD](http://www.wav
 
 Note that the waveshare 3.5/4.0" lcd's overlay is almost same with [JBTek overlay](https://github.com/acidjazz/jbtekoverlay).
 
+### Requirements
+
+- GNU Coreutils
+- GNU Make
+- dvc (device tree compiler)
+
 ### Installation
 
 *_Update:_* The fbtft drivers have been absorbed into the official linux kernel tree. Step 1 can be skipped.
@@ -12,28 +18,32 @@ Note that the waveshare 3.5/4.0" lcd's overlay is almost same with [JBTek overla
 2.) Clone my repo onto your pi
 ```shell
 git clone https://github.com/swkim01/waveshare-dtoverlays.git
+cd waveshare-dtoverlays
 ```
 
-3.) According to your LCD's type, copy the overlay file waveshare32b-overlay.dtb or waveshare35b-overlay.dtb to `/boot/overlays` as root
+3.) Compile the device tree overlay binary objects:
+```shell
+make
+```
+
+4.) Install the device tree overlay binary files to /boot/overlays using:
+```shell
+sudo make install
+```
+
+Or, if you are using a Linux kernel older than version 4.4, install
+the correct file manually, according to your LCD type:
 
 In case of waveshare 3.2" LCD
 ```shell
-sudo cp waveshare-dtoverlays/waveshare32b.dtbo /boot/overlays/
-```
-or if older than linux 4.4 kernel,
-```shell
-sudo cp waveshare-dtoverlays/waveshare32b.dtbo /boot/overlays/waveshare32b-overlay.dtb
+sudo cp waveshare32b.dtbo /boot/overlays/waveshare32b-overlay.dtb
 ```
 In case of waveshare 3.5/4" LCD
 ```shell
-sudo cp waveshare-dtoverlays/waveshare35a.dtbo /boot/overlays/
-```
-or if older than linux 4.4 kernel,
-```shell
-sudo cp waveshare-dtoverlays/waveshare35a.dtbo /boot/overlays/waveshare35a-overlay.dtb
+sudo cp waveshare35a.dtbo /boot/overlays/waveshare35a-overlay.dtb
 ```
 
-4.) Specify this overlay file in your `/boot/config.txt`
+5.) Specify this overlay file in your `/boot/config.txt`
 ```ini
 dtoverlay=waveshare32b
 ```
@@ -47,10 +57,11 @@ dtoverlay=waveshare32b:rotate=270
 dtoverlay=waveshare35a:rotate=90,swapxy=1
 ```
 
-5.) reboot your raspberry pi
+6.) Reboot your raspberry pi
 
 
-6.) In case of using X windows on raspbian buster, you have to create a fbdev conf file. Create /usr/share/X11/xorg.conf.d/99-fbdev.conf.
+7.) In case of using X windows on raspbian buster, you have to create
+a fbdev conf file. Create /usr/share/X11/xorg.conf.d/99-fbdev.conf.
 ```
 Section "Device"
         Identifier "touchscreen"
