@@ -85,7 +85,7 @@
 				compatible = "ti,ads7846";
 				reg = <1>;
 
-				spi-max-frequency = <32000000>;
+				spi-max-frequency = <125000>;
 				interrupts = <17 2>; /* high-to-low edge triggered */
 				interrupt-parent = <&gpio>;
 				pendown-gpio = <&gpio 17 1>;

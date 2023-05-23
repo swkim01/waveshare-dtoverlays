@@ -14,7 +14,7 @@ Note that the waveshare 3.5/4.0" lcd's overlay is almost same with
 
 - GNU Coreutils
 - GNU Make
-- dvc (device tree compiler)
+- dtc (device tree compiler)
 
 ### Installation
 
