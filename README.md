@@ -90,7 +90,7 @@ dtoverlay=waveshare35b-v2,rotate=270,invertx=1,swapxy=1
 
 1.) Wayland Server with DRM/KMS
 
-The touchscreen with wayland are handled by libinput and udev rules. At first you have to get the device name(like ADS7846 Touchscreen) by following command.
+The touchscreens with wayland are handled by libinput and udev rules. At first you have to get the device name(like ADS7846 Touchscreen) by following command.
 ```
 $ sudo libinput list-devices | grep Device
 ```
@@ -118,6 +118,7 @@ ATTRS{name}=="ADS7846 Touchscreen",ENV{LIBINPUT_CALIBRATION_MATRIX}="0 1 0 -1 0 
 ```
 
 2.) Legacy X Server with Framebuffer Driver
+
 To calibrate in detail, you can build a modified source of
 [xinput-calibrator](https://github.com/kreijack/xinput_calibrator/tree/libinput)
 
