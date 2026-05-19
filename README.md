@@ -35,6 +35,33 @@ sudo make install
 ```
 4.) Reboot your raspberry pi
 
+### Display Server
+
+1.) Wayland Server with DRM/KMS
+
+You have to setup dtoverlay with drm parameter.
+```
+dtoverlay=waveshare35a,drm
+```
+After rebooting, you can get lcd drm output device(SPI-1) with following command.
+```
+$ wlr-randr
+```
+Then, modify ~/.config/wayfire.ini file to setup the device.
+```
+[output:SPI-1]
+mode = 480x320@60000
+transform = normal # or 90, 180, 270
+scale = 1.0
+```
+
+2.) Legacy X Server with Framebuffer Driver
+
+You have to setup dtoverlay without drm parameter.
+```
+dtoverlay=waveshare35a
+```
+
 ### Rotation
 
 By default, the display is oriented in portrait mode, with its top
@@ -46,7 +73,7 @@ axes as well, by using the `invertx`, `inverty` and `swapxy`
 parameters.
 
 For example, if you want the display in landscape mode with its top
-toward your Raspberry Pi HMDI connector, you can use:
+toward your Raspberry Pi HDMI connector, you can use:
 
 ```
 dtoverlay=waveshare35b-v2,rotate=90,inverty=1,swapxy=1
@@ -61,6 +88,36 @@ dtoverlay=waveshare35b-v2,rotate=270,invertx=1,swapxy=1
 
 ### Touch Calibration
 
+1.) Wayland Server with DRM/KMS
+
+The touchscreen with wayland are handled by libinput and udev rules. At first you have to get the device name(like ADS7846 Touchscreen) by following command.
+```
+$ sudo libinput list-devices | grep Device
+```
+Modify ~/.config/wayfire.ini file to setup the device.
+```
+[input-device:ADS7846 Touchscreen]
+output = SPI-1
+```
+Then, use [coordinate transformation matrix](https://wayland.freedesktop.org/libinput/doc/latest/absolute-axes.html).
+- Default : 1 0 0 0 1 0
+- clockwise 90 degree: 0 1 0 -1 0 1
+- clockwise 180 degree: -1 0 1 0 -1 1
+- clockwise 270 degree: 0 -1 1 1 0 0
+- inverting x: -1 0 1 0 1 0
+- inverting y: 1 0 0 0 -1 1
+- swapping x and y: 0 1 0 1 0 0
+
+You have to add an udev file
+```
+$ sudo nano /etc/udev/rules.d/98-touchscreen-cal.rules
+```
+with
+```
+ATTRS{name}=="ADS7846 Touchscreen",ENV{LIBINPUT_CALIBRATION_MATRIX}="0 1 0 -1 0 1"
+```
+
+2.) Legacy X Server with Framebuffer Driver
 To calibrate in detail, you can build a modified source of
 [xinput-calibrator](https://github.com/kreijack/xinput_calibrator/tree/libinput)
 
